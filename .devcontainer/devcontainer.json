@@ -1,12 +1,39 @@
 {
-  "name": "WhatsApp Bot (Node.js 20)",
-  "image": "mcr.microsoft.com/devcontainers/node:20",
-  "forwardPorts": [3000],
+  "name": "WhatsApp Bot (Node.js 20 + Redis + PostgreSQL)",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20-bookworm",
+  "forwardPorts": [3000, 6379, 5432],
   "postCreateCommand": "npm install",
-  "features": {},
+  "services": {
+    "postgres": {
+      "image": "postgres:16-bookworm",
+      "environment": {
+        "POSTGRES_DB": "jamb_bot",
+        "POSTGRES_USER": "jamb_user",
+        "POSTGRES_PASSWORD": "jamb_password"
+      },
+      "ports": [5432],
+      "volumes": ["postgres_data:/var/lib/postgresql/data"]
+    },
+    "redis": {
+      "image": "redis:7-bookworm",
+      "ports": [6379],
+      "volumes": ["redis_data:/data"]
+    }
+  },
+  "volumes": {
+    "postgres_data": {},
+    "redis_data": {}
+  },
+  "waitFor": "postCreateCommand",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
   "customizations": {
     "vscode": {
-      "extensions": []
+      "extensions": [
+        "ms-python.python",
+        "ms-vscode.makefile-tools"
+      ]
     }
   }
 }
