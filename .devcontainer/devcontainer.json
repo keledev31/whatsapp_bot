@@ -1,0 +1,12 @@
+{
+  "name": "WhatsApp Bot (Node.js 20)",
+  "image": "mcr.microsoft.com/devcontainers/node:20",
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm install",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "extensions": []
+    }
+  }
+}
